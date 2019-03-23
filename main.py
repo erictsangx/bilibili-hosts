@@ -1,7 +1,29 @@
-import clipboard
-import re
 import platform
+import random
+import re
+import socket
 from sys import exit
+
+import clipboard
+
+ip = ''
+randomNums = [p for p in range(0, 10)]
+random.shuffle(randomNums)
+for num in randomNums:
+    domain = 'cn-sh-ix-acache-0{}.acgvideo.com'.format(num)
+    try:
+        ip = socket.gethostbyname(domain)
+    except:
+        pass
+        # should never ignore exceptions!!
+
+    if ip != '' and ip != '127.0.0.1':
+        print("取得IP {} = {}".format(domain, ip))
+        break
+
+if ip == '':
+    print("退出...無法取得cn-sh-ix-acache-XX.acgvideo.com的IP")
+    exit(1)
 
 text = clipboard.paste()
 print('已複製: ' + text)
@@ -50,7 +72,6 @@ for item in hosts:
 if hosts[-1] != '\n':
     f.write('\n')
 
-ip = '58.216.33.102'
 f.write(s_marker)
 for i in range(0, 10):
     srv = prefix + '0' + str(i) + '.acgvideo.com'
