@@ -6,8 +6,13 @@ from sys import exit
 
 import clipboard
 
+
+def junk_input():
+    _ = input('按回車鍵退出:')
+
+
 ip = ''
-randomNums = [p for p in range(0, 10)]
+randomNums = [p for p in range(1, 10)]
 random.shuffle(randomNums)
 for num in randomNums:
     domain = 'cn-sh-ix-acache-0{}.acgvideo.com'.format(num)
@@ -22,7 +27,8 @@ for num in randomNums:
         break
 
 if ip == '':
-    print("退出...無法取得cn-sh-ix-acache-XX.acgvideo.com的IP")
+    print("無法取得cn-sh-ix-acache-XX.acgvideo.com的IP")
+    junk_input()
     exit(1)
 
 text = clipboard.paste()
@@ -32,7 +38,7 @@ pattern = re.compile('[a-zA-Z0-9-]+[0-1]{1}[0-9]{1}.acgvideo.com')
 p = pattern.match(text.strip())
 if p is None:
     print('輸入錯誤...請確定複製伺服器: 如cn-zjhz2-wasu-acache-10.acgvideo.com')
-    junk = input('按回車鍵退出:')
+    junk_input()
     exit(0)
 
 target = p.group(0)
